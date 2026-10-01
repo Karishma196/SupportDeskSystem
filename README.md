@@ -28,6 +28,26 @@ A high-performance, resilient support ticket management dashboard built with Nex
 
 ---
 
+## Implementation Progress Checklist
+
+- [x] **Project Setup & Architecture:** Next.js (App Router), React 19, TypeScript, and Tailwind CSS.
+- [x] **In-Memory Store & Fake API:** Ingests 5,000+ seed tickets plus all 12 edge-case test tickets; supports pagination, filtering, search, and updates.
+- [x] **Server-Side Business Rules:** Enforces state machine transitions, Enterprise customer priority floor (minimum P1), and agent validity on the server.
+- [x] **Shared State (Redux Toolkit):** Agent switcher (Priya, Rahul, Meera) with localStorage persistence and live header metric badges (My tickets, To review).
+- [x] **Ticket List & Continuous Scrolling:** Responsive table on desktop, mobile cards on 375px screens, 300ms debounced search, and URL parameter sync.
+- [x] **Live SLA Countdown Timers:** 1-second countdown ticks categorizing tickets as Late, At Risk (<20% remaining), or On Track.
+- [x] **Ticket Details & Defensive Sanitization:** Safe HTML rendering neutralizing stored XSS (`T-2002`, `T-2011`) and attachment link protocol validator blocking `javascript:` URIs (`T-2003`).
+- [x] **Optimistic Ticket Claiming:** Instant UI mutation with automatic rollback and descriptive toast notification upon simulated HTTP 409 conflict.
+- [x] **AI Review Queue (`/review`):** Human review queue for `manual_review` tickets, supporting Accept and Modify actions with minimum 10-character reason validation.
+- [x] **Live Updates Polling:** 7-second delta polling with non-intrusive floating banner ("N new tickets — show") to eliminate scroll jumping.
+- [x] **Multi-Select Bulk Actions:** Independent per-ticket request execution with partial failure handling and granular status reporting.
+- [x] **Mobile Responsiveness:** Verified and styled for small 375px viewports.
+- [x] **Performance Optimization:** Achieved 93/100 Mobile Lighthouse Performance score with row-level `React.memo` preventing sibling re-renders.
+- [x] **Deterministic Test Suite:** 56 automated tests passing across 9 test suites with chaos latency/error bypass in test mode.
+- [x] **Engineering Decisions Log:** Concise, easy-to-understand `DECISIONS.md` documenting security traps, test ticket handling, and architecture.
+
+---
+
 ## Mobile Lighthouse Performance (Score: 93/100)
 
 The application was audited on mobile production build in accordance with the assignment requirements:
