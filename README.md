@@ -43,7 +43,7 @@ A high-performance, resilient support ticket management dashboard built with Nex
 - [x] **Multi-Select Bulk Actions:** Independent per-ticket request execution with partial failure handling and granular status reporting.
 - [x] **Mobile Responsiveness:** Verified and styled for small 375px viewports.
 - [x] **Performance Optimization:** Achieved 93/100 Mobile Lighthouse Performance score with row-level `React.memo` preventing sibling re-renders.
-- [x] **Deterministic Test Suite:** 72 automated tests passing across 10 test suites with chaos latency/error bypass in test mode.
+- [x] **Deterministic Test Suite:** 77 automated tests passing across 12 test suites with chaos latency/error bypass in test mode.
 - [x] **Engineering Decisions Log:** Concise, easy-to-understand `DECISIONS.md` documenting security traps, test ticket handling, and architecture.
 
 ---
@@ -165,7 +165,7 @@ TRIAGE_API_KEY=mock-triage-secret-key-12345
 
 ## Testing
 
-The project includes 72 automated tests across 10 test suites verifying:
+The project includes 77 automated tests across 12 test suites verifying:
 - **Business Rule Verification:** Enforcement of enterprise priority limits, valid status transitions, and agent assignment.
 - **Security Sanitization:** Neutralization of stored XSS scripts/onerror vectors (`T-2002`, `T-2011`) and malicious URI schemes (`javascript:` in `T-2003`).
 - **State & Optimistic Updates:** Verification of immediate UI state application and proper rollback upon simulated 409 conflict.

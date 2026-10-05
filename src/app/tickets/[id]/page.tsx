@@ -32,9 +32,12 @@ import {
 export default function TicketDetailsPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }> | { id: string };
 }) {
-  const resolvedParams = use(params);
+  const resolvedParams =
+    params && typeof (params as Promise<{ id: string }>).then === "function"
+      ? use(params as Promise<{ id: string }>)
+      : (params as { id: string });
   const ticketId = resolvedParams.id;
   const router = useRouter();
   const dispatch = useAppDispatch();

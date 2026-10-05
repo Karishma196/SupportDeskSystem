@@ -138,4 +138,13 @@ We treat AI output as suggestions, not absolute truth:
 * **Row Memoization:** Table rows and mobile cards are wrapped in `React.memo` with custom property comparison, ensuring updates to one ticket do not cause sibling rows to redraw.
 * **Responsive 375px View:** On mobile screens (<640px), the table transforms into compact cards with full selection and claiming capabilities.
 
+---
+
+## 11. Ticket Details & AI Review Queue Verification (Phases 4 & 5)
+
+* **Review Queue Trap Resolution (T-2012):** Test tickets `T-2004` and `T-2012` contained unusual data (`priority: "P5"` and `triage_decision: "maybe"`). In the backend store, queries for `triage_decision=manual_review` and the `To review` header counter include any non-standard decision that is not `auto_accept`. This guarantees that ambiguous AI outputs are never hidden from human agents.
+* **Double-Click Protection:** All action buttons on `/tickets/[id]` (claim, status move, re-run AI) employ in-flight disabled guards (`isClaiming`, `isUpdatingStatus`, `isRetriaging`) to prevent double-submitting requests.
+* **Optimistic Updates & Automatic Rollback:** Claiming and status mutations apply to the UI immediately, and restore their previous snapshot with a clear toast message if the server responds with 409 Conflict, 400 Bad Request, or a network timeout.
+
+
 

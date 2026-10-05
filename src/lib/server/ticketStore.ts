@@ -171,9 +171,15 @@ export class TicketStore {
       result = result.filter((t) => t.category === filters.category);
     }
 
-    // Filter by triage decision
+    // Filter by triage decision (manual_review includes non-standard decisions like 'maybe')
     if (filters.triage_decision && filters.triage_decision !== "all") {
-      result = result.filter((t) => t.triage_decision === filters.triage_decision);
+      if (filters.triage_decision === "manual_review") {
+        result = result.filter(
+          (t) => t.triage_decision === "manual_review" || t.triage_decision === "maybe"
+        );
+      } else {
+        result = result.filter((t) => t.triage_decision === filters.triage_decision);
+      }
     }
 
     // Search query on subject and body

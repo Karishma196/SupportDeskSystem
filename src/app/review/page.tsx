@@ -357,9 +357,15 @@ export default function ReviewQueuePage() {
                           AI Flag Reason:
                         </span>
                         <span className="rounded bg-amber-100 px-1.5 py-0.2 font-mono text-3xs font-bold text-amber-800">
-                          {ticket.review_reason || "manual_review"}
+                          {ticket.review_reason || (ticket.triage_decision !== "manual_review" ? `decision: ${ticket.triage_decision}` : "manual_review")}
                         </span>
                       </div>
+
+                      {ticket.triage_decision !== "manual_review" && (
+                        <div className="text-3xs font-semibold text-amber-800">
+                          * Flagged due to unrecognized AI decision: &quot;{ticket.triage_decision}&quot;.
+                        </div>
+                      )}
 
                       {ticket.summary ? (
                         <div className="text-2xs text-neutral-700">
