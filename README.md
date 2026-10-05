@@ -173,3 +173,9 @@ The project includes 77 automated tests across 12 test suites verifying:
 - **Partial Failure Handling:** Granular bulk action error tracking.
 
 All tests run deterministically by bypassing chaos simulation.
+
+
+## Deployment Link
+
+https://support-desk-system-git-main-mimi-94ad.vercel.app/tickets
+
