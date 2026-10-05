@@ -4,7 +4,7 @@ import React from "react";
 import { TicketRow } from "./TicketRow";
 import { Ticket } from "@/types/ticket";
 
-describe("TicketRow Component Memoization", () => {
+describe("TicketRow Component", () => {
   const sampleTicket: Ticket = {
     external_id: "T-5001",
     customer_id: "C-1",
@@ -47,5 +47,92 @@ describe("TicketRow Component Memoization", () => {
     // Re-render parent with incremented count (unrelated state change)
     rerender(<Wrapper count={2} ticket={{ ...sampleTicket }} />);
     expect(renderSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it("renders all required columns: subject, plan, category, priority, status, agent, and deadline", () => {
+    const { getByText } = render(
+      <table>
+        <tbody>
+          <TicketRow
+            ticket={sampleTicket}
+            isSelected={false}
+            onToggleSelect={vi.fn()}
+            onClaimTicket={vi.fn()}
+          />
+        </tbody>
+      </table>
+    );
+
+    expect(getByText("T-5001")).toBeDefined();
+    expect(getByText("Memoization test subject")).toBeDefined();
+    expect(getByText("pro")).toBeDefined();
+    expect(getByText("billing")).toBeDefined();
+    expect(getByText("P2")).toBeDefined();
+    expect(getByText("Open")).toBeDefined();
+    expect(getByText("Unassigned")).toBeDefined();
+    expect(getByText("Claim")).toBeDefined();
+  });
+
+  it("triggers onClaimTicket when the Claim button is clicked", () => {
+    const onClaimSpy = vi.fn();
+    const { getByText } = render(
+      <table>
+        <tbody>
+          <TicketRow
+            ticket={sampleTicket}
+            isSelected={false}
+            onToggleSelect={vi.fn()}
+            onClaimTicket={onClaimSpy}
+          />
+        </tbody>
+      </table>
+    );
+
+    const claimBtn = getByText("Claim");
+    claimBtn.click();
+    expect(onClaimSpy).toHaveBeenCalledWith("T-5001");
+  });
+
+  it("triggers onToggleSelect when the checkbox is toggled", () => {
+    const onToggleSpy = vi.fn();
+    const { getByRole } = render(
+      <table>
+        <tbody>
+          <TicketRow
+            ticket={sampleTicket}
+            isSelected={false}
+            onToggleSelect={onToggleSpy}
+            onClaimTicket={vi.fn()}
+          />
+        </tbody>
+      </table>
+    );
+
+    const checkbox = getByRole("checkbox");
+    checkbox.click();
+    expect(onToggleSpy).toHaveBeenCalledWith("T-5001");
+  });
+
+  it("renders fallback '(No subject)' when subject is empty string", () => {
+    const emptySubjectTicket: Ticket = {
+      ...sampleTicket,
+      external_id: "T-2006",
+      subject: "",
+    };
+
+    const { getByText } = render(
+      <table>
+        <tbody>
+          <TicketRow
+            ticket={emptySubjectTicket}
+            isSelected={false}
+            onToggleSelect={vi.fn()}
+            onClaimTicket={vi.fn()}
+          />
+        </tbody>
+      </table>
+    );
+
+    expect(getByText("(No subject)")).toBeDefined();
   });
 });

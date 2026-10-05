@@ -61,7 +61,6 @@ export const TicketRow = memo(
               <span className="font-mono text-2xs font-semibold text-neutral-500">
                 {ticket.external_id}
               </span>
-              <PlanBadge plan={ticket.customer_plan} />
               {ticket.triage_decision === "manual_review" && (
                 <span className="rounded bg-amber-100 px-1 py-0.2 text-3xs font-semibold text-amber-800">
                   Review
@@ -77,6 +76,11 @@ export const TicketRow = memo(
               {displaySubject}
             </Link>
           </div>
+        </td>
+
+        {/* Plan */}
+        <td className="whitespace-nowrap px-3 py-3">
+          <PlanBadge plan={ticket.customer_plan} />
         </td>
 
         {/* Category */}
@@ -145,6 +149,7 @@ export const TicketRow = memo(
       prev.ticket.status === next.ticket.status &&
       prev.ticket.priority === next.ticket.priority &&
       prev.ticket.category === next.ticket.category &&
+      prev.ticket.customer_plan === next.ticket.customer_plan &&
       prev.ticket.assigned_to === next.ticket.assigned_to &&
       prev.ticket.updated_at === next.ticket.updated_at &&
       prev.isSelected === next.isSelected &&

@@ -128,3 +128,14 @@ We treat AI output as suggestions, not absolute truth:
 * **Chaos Fault Simulation:** Endpoints include simulated latency (300ms-1500ms), 10% 500 errors, and 25% claim conflicts. To keep tests fast and deterministic, chaos is bypassed when `NODE_ENV === 'test'` or when the request header `x-bypass-chaos: 1` is sent.
 * **Server Authority:** Validation for status changes, Enterprise priority limits, and valid agent IDs runs on the server route handlers. The backend never relies on client-side validation.
 
+---
+
+## 10. Ticket List Implementation Details (Phase 3)
+
+* **Table Columns:** Dedicated columns for Subject & ID, Plan, Category, Priority, Status, Agent, Created Time, and Deadline countdown.
+* **Live SLA Countdown:** Ticks every 1 second in `DeadlineBadge`. Categorizes deadlines into Late, At Risk (<20% remaining), or On Track, and tolerates SQL-style dates and future dates safely.
+* **Search Debouncing:** Search input keeps local state and debounces URL updates by 300ms, avoiding firing network requests on every keystroke.
+* **Row Memoization:** Table rows and mobile cards are wrapped in `React.memo` with custom property comparison, ensuring updates to one ticket do not cause sibling rows to redraw.
+* **Responsive 375px View:** On mobile screens (<640px), the table transforms into compact cards with full selection and claiming capabilities.
+
+

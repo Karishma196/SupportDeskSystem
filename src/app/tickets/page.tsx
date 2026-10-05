@@ -360,12 +360,13 @@ function TicketsContent() {
                       />
                     </th>
                     <th className="px-3 py-2.5">Subject & ID</th>
+                    <th className="px-3 py-2.5">Plan</th>
                     <th className="px-3 py-2.5">Category</th>
                     <th className="px-3 py-2.5">Priority</th>
                     <th className="px-3 py-2.5">Status</th>
                     <th className="px-3 py-2.5">Agent</th>
                     <th className="px-3 py-2.5">Created</th>
-                    <th className="px-3 py-2.5">SLA Countdown</th>
+                    <th className="px-3 py-2.5">Deadline</th>
                     <th className="px-3 py-2.5 text-right">Action</th>
                   </tr>
                 </thead>

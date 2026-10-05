@@ -120,6 +120,7 @@ export const MobileTicketCard = memo(
       prev.ticket.status === next.ticket.status &&
       prev.ticket.priority === next.ticket.priority &&
       prev.ticket.category === next.ticket.category &&
+      prev.ticket.customer_plan === next.ticket.customer_plan &&
       prev.ticket.assigned_to === next.ticket.assigned_to &&
       prev.ticket.updated_at === next.ticket.updated_at &&
       prev.isSelected === next.isSelected &&
