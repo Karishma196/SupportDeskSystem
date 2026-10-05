@@ -379,7 +379,10 @@ export class TicketStore {
       if (ticket.status !== "closed" && ticket.assigned_to === agentId) {
         myTicketsCount++;
       }
-      if (ticket.status !== "closed" && ticket.triage_decision === "manual_review") {
+      if (
+        ticket.status !== "closed" &&
+        (ticket.triage_decision === "manual_review" || ticket.triage_decision === "maybe")
+      ) {
         toReviewCount++;
       }
     }

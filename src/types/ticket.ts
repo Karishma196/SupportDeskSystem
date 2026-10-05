@@ -43,6 +43,60 @@ export interface Ticket {
   updated_at?: string;
 }
 
+export type TicketStatus = Status;
+export type TicketPriority = Priority;
+export type TicketCategory = StandardCategory;
+
+export interface Customer {
+  id: string;
+  plan: CustomerPlan | string;
+  email?: string;
+  name?: string;
+}
+
+export interface ApiError {
+  message: string;
+  code?: string;
+  details?: unknown;
+}
+
+export interface ApiErrorResponse {
+  error: string;
+  code?: string;
+  details?: unknown;
+}
+
+export interface ApiResponse<T = unknown> {
+  data?: T;
+  error?: ApiError | string;
+  success?: boolean;
+  [key: string]: unknown;
+}
+
+export interface PaginationParams {
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginationMeta {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface TicketUpdateEvent {
+  type:
+    | "created"
+    | "updated"
+    | "claimed"
+    | "status_changed"
+    | "triaged"
+    | "retriaged";
+  ticket: Ticket;
+  timestamp: string;
+}
+
 export interface TicketFilters {
   status: string;
   priority: string;
@@ -63,3 +117,4 @@ export interface UpdatesApiResponse {
   updated_tickets: Ticket[];
   server_time: string;
 }
+

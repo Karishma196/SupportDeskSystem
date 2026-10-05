@@ -117,3 +117,14 @@ We treat AI output as suggestions, not absolute truth:
 * **Flawed Suggestion in the Brief:** The brief suggested calling the AI triage service directly from the browser using `NEXT_PUBLIC_TRIAGE_API_KEY`.
 * **How Identified:** Next.js embeds all `NEXT_PUBLIC_` variables directly into client JavaScript bundles. Anyone inspecting the code in browser DevTools could steal the key. This directly violated the brief's own rule to keep secrets out of the browser.
 * **Resolution:** We rejected the suggestion. The browser calls an internal API route, and the API route uses the secret key safely on the server.
+
+---
+
+## 9. In-Memory Store & Fake API Design (Phase 2)
+
+* **Flexible Data Models:** We used type unions (`Priority | string`, `CustomerPlan | string`) so malformed test data (such as `T-2004` with priority `P5` and plan `platinum`) can be ingested without runtime crashes or discarding records.
+* **Seed Deduplication:** Raw test data includes `T-2001` twice. On initialization, the store tracks `seenIds` and loads only the first instance, ensuring unique IDs.
+* **In-Memory Concurrency & Limitations:** Tickets live in a JavaScript `Map` attached to `globalThis` (to survive Next.js dev reloads). In a single Node process, JavaScript's single-threaded event loop prevents race conditions on synchronous map lookups and writes. However, in-memory storage resets on server restarts and is not shared across multi-instance serverless deployments. A real system would use PostgreSQL with transactions.
+* **Chaos Fault Simulation:** Endpoints include simulated latency (300ms-1500ms), 10% 500 errors, and 25% claim conflicts. To keep tests fast and deterministic, chaos is bypassed when `NODE_ENV === 'test'` or when the request header `x-bypass-chaos: 1` is sent.
+* **Server Authority:** Validation for status changes, Enterprise priority limits, and valid agent IDs runs on the server route handlers. The backend never relies on client-side validation.
+
