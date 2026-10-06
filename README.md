@@ -4,6 +4,12 @@ A high-performance, resilient support ticket management dashboard built with Nex
 
 ---
 
+
+## Deployment Link
+
+https://support-desk-system-git-main-mimi-94ad.vercel.app/tickets
+
+
 ## Technical Stack
 
 - **Framework:** Next.js (App Router)
@@ -174,8 +180,4 @@ The project includes 77 automated tests across 12 test suites verifying:
 
 All tests run deterministically by bypassing chaos simulation.
 
-
-## Deployment Link
-
-https://support-desk-system-git-main-mimi-94ad.vercel.app/tickets
 
